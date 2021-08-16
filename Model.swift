@@ -21,17 +21,24 @@ class Currency{
 
 
 
-class Model: NSObject {
+class Model: NSObject, XMLParserDelegate {
     static let shared = Model()
     
     var currencies: [Currency] = []
     
     var pathForXML: String{
-        return ""
+        let path = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.libraryDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)[0]+"/data.xml"
+        
+        if FileManager.default.fileExists(atPath: path){
+            return path
+        }
+        
+        return Bundle.main.path(forResource: "data", ofType: "xml")!
     }
     
-    var urlForXML: URL?{
-        return nil
+    var urlForXML: URL{
+        
+        return URL(fileURLWithPath: pathForXML)
     }
     
     //загрузка XML с cbr.ru и сохранение в катологе приложения
@@ -41,8 +48,57 @@ class Model: NSObject {
     
     //распарсить XML и положить его в currencies, отправить уведомление приложению об обновлении данных
     func parseXML(){
+       let parser = XMLParser(contentsOf: urlForXML)
+        parser?.delegate = self
+        parser?.parse()
+        
+        print(currencies)
+    }
+    
+    var currentCurrcency: Currency?
+    
+    func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]){
+        
+        if elementName == "Valute"{
+            currentCurrcency = Currency()
+        }
         
     }
+    
+    var currentCharacters: String = ""
+    func parser(_ parser: XMLParser, foundCharacters string: String){
+        
+        currentCharacters = string
+    }
+
+    
+    func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?){
+        
+        if elementName == "NumCode"{
+            currentCurrcency?.NumCode = currentCharacters
+        }
+        if elementName == "CharCode"{
+            currentCurrcency?.CharCode = currentCharacters
+        }
+        if elementName == "Nominal"{
+            currentCurrcency?.Nominal = currentCharacters
+            currentCurrcency?.nominalDouble = Double(currentCharacters.replacingOccurrences(of: ",", with: "."))
+        }
+        if elementName == "Name"{
+            currentCurrcency?.Name = currentCharacters
+        }
+        if elementName == "Value"{
+            currentCurrcency?.Value = currentCharacters
+            currentCurrcency?.valueDouble = Double(currentCharacters.replacingOccurrences(of: ",", with: "."))
+        }
+        
+        if elementName == "Valute"{
+            currencies.append(currentCurrcency!)
+        }
+    }
+
+    
+
     
 }
 
