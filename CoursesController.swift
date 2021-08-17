@@ -2,14 +2,22 @@
 import UIKit
 
 class CoursesController: UITableViewController {
+    
+    
+    @IBAction func pushRefreshAction(_ sender: Any) {
+        Model.shared.loadXMLFile(date: nil)
+    }
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "DataRefreshed"), object: nil, queue: nil) { (notification) in
             
-            self.tableView.reloadData()
-            self.navigationItem.title = Model.shared.currentDate
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+                self.navigationItem.title = Model.shared.currentDate
+            }
         }
         navigationItem.title = Model.shared.currentDate
     }
