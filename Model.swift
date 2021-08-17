@@ -26,6 +26,8 @@ class Model: NSObject, XMLParserDelegate {
     
     var currencies: [Currency] = []
     
+    var currentDate: String = ""
+    
     var pathForXML: String{
         let path = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.libraryDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)[0]+"/data.xml"
         
@@ -59,7 +61,8 @@ class Model: NSObject, XMLParserDelegate {
                 let urlForSave = URL(fileURLWithPath: path)
                 do{
                     try data?.write(to: urlForSave)
-                    print(path)
+                    print("Файл загружен")
+                    self.parseXML()
                 }catch{
                     print("Error when save data: \(error.localizedDescription)")
                 }
@@ -79,12 +82,19 @@ class Model: NSObject, XMLParserDelegate {
         parser?.delegate = self
         parser?.parse()
         
-        print(currencies)
+        print("Данные обновлены")
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "DataRefreshed"), object: self)
     }
     
     var currentCurrcency: Currency?
     
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]){
+        if elementName == "ValCurs"{
+            if let currentDateString = attributeDict["Date"] {
+                currentDate = currentDateString
+        }
+    }
+        
         
         if elementName == "Valute"{
             currentCurrcency = Currency()

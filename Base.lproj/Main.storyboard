@@ -51,7 +51,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="GOH-8U-kKD" detailTextLabel="6vV-2B-ntQ" style="IBUITableViewCellStyleValue1" id="B1h-3d-pFh">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="GOH-8U-kKD" detailTextLabel="COL-2B-Rcz" style="IBUITableViewCellStyleValue1" id="B1h-3d-pFh">
                                 <rect key="frame" x="0.0" y="24.5" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="top" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="B1h-3d-pFh" id="ICb-yA-eHU">
@@ -65,7 +65,7 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6vV-2B-ntQ">
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="COL-2B-Rcz">
                                             <rect key="frame" x="361" y="15" width="33" height="14.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
@@ -81,7 +81,14 @@
                             <outlet property="delegate" destination="O5E-Ow-DS4" id="wRh-YL-2YS"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Курсы" id="T79-Xg-1Uy"/>
+                    <navigationItem key="navigationItem" title="Курсы" id="T79-Xg-1Uy">
+                        <barButtonItem key="leftBarButtonItem" title="Настройки" id="7vt-jN-Psa">
+                            <connections>
+                                <segue destination="l9f-dY-bbR" kind="presentation" id="jOK-V8-4Hw"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="w6W-7q-oeO"/>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="74j-6t-jLa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -124,6 +131,53 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xvj-4c-bjW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="318.84057971014494" y="671.65178571428567"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="eG6-GQ-2kG">
+            <objects>
+                <viewController id="oWo-sz-ogB" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="beH-hm-2LH">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="K9S-gW-NjO">
+                                <rect key="frame" x="0.0" y="163" width="414" height="162"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            </datePicker>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W2V-tP-B5d">
+                                <rect key="frame" x="20" y="374" width="374" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Показать курсы"/>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="82N-fw-a8B"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Fob-A4-od5">
+                        <barButtonItem key="leftBarButtonItem" title="Сохранить" id="P2N-Ku-9WZ"/>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WsS-ri-GQT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2571.0144927536235" y="-776.11607142857144"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="3Ri-p1-4gl">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="l9f-dY-bbR" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="tbD-n7-H5e">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="oWo-sz-ogB" kind="relationship" relationship="rootViewController" id="qPa-yN-DM9"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qH5-S1-nys" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1660.8695652173915" y="-776.11607142857144"/>
         </scene>
     </scenes>
     <resources>
