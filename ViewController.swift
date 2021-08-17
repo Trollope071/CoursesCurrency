@@ -1,9 +1,3 @@
-//
-//  ViewController.swift
-//  CoursesCurrency
-//
-//  Created by Савва Варма on 17.08.2021.
-//
 
 import UIKit
 
