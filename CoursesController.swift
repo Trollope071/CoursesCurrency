@@ -4,6 +4,7 @@ import UIKit
 class CoursesController: UITableViewController {
     
     
+    
     @IBAction func pushRefreshAction(_ sender: Any) {
         Model.shared.loadXMLFile(date: nil)
     }
@@ -12,14 +13,27 @@ class CoursesController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "startLoadingXML"), object: nil, queue: nil) { (notification) in
+            
+            DispatchQueue.main.async {
+                let activityIndicator = UIActivityIndicatorView(style: .medium)
+                activityIndicator.startAnimating()
+                self.navigationItem.rightBarButtonItem?.customView = activityIndicator
+            }
+        }
+
         NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "DataRefreshed"), object: nil, queue: nil) { (notification) in
             
             DispatchQueue.main.async {
                 self.tableView.reloadData()
                 self.navigationItem.title = Model.shared.currentDate
+                let barButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(self.pushRefreshAction(_:)))
+                self.navigationItem.rightBarButtonItem = barButtonItem
             }
         }
         navigationItem.title = Model.shared.currentDate
+        Model.shared.loadXMLFile(date: nil)
     }
 
     // MARK: - Table view data source
